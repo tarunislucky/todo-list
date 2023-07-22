@@ -8,8 +8,11 @@ body {
 	background-color: aqua;
 }
 li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-left: 5px;
 	list-style: none;
-	padding: 5px;
 	background-color: #ccc;
 	margin-bottom: 10px;
 }
@@ -37,4 +40,9 @@ form {
 	display: flex;
 	gap: 10px;
 	align-items: center;
+}
+.btn-delete {
+	background-color: orangered;
+	color: #fff;
+	border: none;
 }
