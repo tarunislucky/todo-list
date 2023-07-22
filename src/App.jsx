@@ -10,6 +10,8 @@ function App() {
 	const addTaskHandler = (event) => {
 		event.preventDefault();
 		const inputValue = inputRef.current.value;
+		if (inputValue.trim() === "") return;
+
 		setTasks((prevState) => [
 			{ name: inputValue, id: Math.random() },
 			...prevState,
