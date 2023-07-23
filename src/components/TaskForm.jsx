@@ -1,18 +1,16 @@
-import { useContext } from "react";
 import { useRef } from "react";
-
-import TaskContext from "../store/task-context";
+import { useDispatch } from "react-redux";
 
 const TaskForm = () => {
 	const inputRef = useRef();
-	const { onAddTask } = useContext(TaskContext);
+	const dispatch = useDispatch();
 
 	const formSubmitHandler = (e) => {
-		const task = inputRef.current.value;
 		e.preventDefault();
-		if (task === "") return;
-		// add new task
-		onAddTask(task);
+		if (inputRef.current.value.trim() === "") return;
+
+		dispatch({ type: "addTask", task: inputRef.current.value });
+
 		inputRef.current.value = "";
 	};
 

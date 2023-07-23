@@ -1,12 +1,15 @@
 import React from "react";
-const TaskItem = ({ task, onDelete }) => {
-	const deleteHandler = () => {
-		onDelete(task.id);
+import { useDispatch } from "react-redux";
+const TaskItem = ({ task }) => {
+	const dispatch = useDispatch();
+
+	const deleteTaskHandler = () => {
+		dispatch({ type: "removeTask", id: task.id });
 	};
 	return (
 		<li>
 			{task.name}
-			<button onClick={deleteHandler} className="btn-delete">
+			<button className="btn-delete" onClick={deleteTaskHandler}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 48 48"

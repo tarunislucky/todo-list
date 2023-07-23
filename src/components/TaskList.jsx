@@ -1,12 +1,14 @@
-import { useContext } from "react";
-import TaskContext from "../store/task-context";
+import { useSelector } from "react-redux";
 import TaskItem from "./TaskItem";
 const TaskList = () => {
-	const { tasks, onDeleteTask } = useContext(TaskContext);
+	const tasks = useSelector((state) => {
+		return state.tasks;
+	});
+
 	return (
 		<ul>
 			{tasks.map((task) => (
-				<TaskItem task={task} key={task.id} onDelete={onDeleteTask} />
+				<TaskItem task={task} key={task.id} />
 			))}
 		</ul>
 	);
