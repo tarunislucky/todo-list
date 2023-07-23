@@ -1,54 +1,40 @@
 import { useState } from "react";
-import { useRef } from "react";
 import "./App.css";
+import Card from "./components/Card";
+import ClearAllTasks from "./components/ClearAllTasks";
+import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 
 function App() {
-	const inputRef = useRef();
 	const [tasks, setTasks] = useState([]);
 
-	const addTaskHandler = (event) => {
-		event.preventDefault();
-		const inputValue = inputRef.current.value;
-		if (inputValue.trim() === "") return;
-
-		setTasks((prevState) => [
-			{ name: inputValue, id: Math.random() },
-			...prevState,
+	const addTaskHandler = (taskText) => {
+		setTasks((tasksPrev) => [
+			{ name: taskText, id: Math.random() },
+			...tasksPrev,
 		]);
-		inputRef.current.value = "";
 	};
 	const clearAllTasksHandler = () => {
 		setTasks([]);
 	};
 	const deleteTaskHandler = (id) => {
-		setTasks((prevState) => {
-			// never mutate state in react
-			const tasks = [...prevState];
-			const index = tasks.findIndex((item) => item.id === id);
-			// splcie mutates tasks, but tasks is not the state, it is a copy
-			tasks.splice(index, 1);
+		setTasks((tasksPrev) => {
+			const tasks = tasksPrev.filter((tsk) => tsk.id !== id);
 			return tasks;
 		});
 	};
 
 	return (
 		<>
-			<div className="card">
+			<Card>
 				<h1>Todo App</h1>
 
-				<form>
-					<input ref={inputRef} placeholder="Add your new todo" />
-					<button onClick={addTaskHandler}>+</button>
-				</form>
+				<TaskForm onAddTask={addTaskHandler} />
 
 				<TaskList tasks={tasks} deleteTaskHandler={deleteTaskHandler} />
 
-				<div className="clear-tasks">
-					<p>You have {tasks.length} pending tasks</p>
-					<button onClick={clearAllTasksHandler}>Clear All</button>
-				</div>
-			</div>
+				<ClearAllTasks tasks={tasks} onClearTasks={clearAllTasksHandler} />
+			</Card>
 		</>
 	);
 }
