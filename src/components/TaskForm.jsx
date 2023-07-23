@@ -1,24 +1,25 @@
-import { useState } from "react";
-import TaskInput from "./TaskInput";
+import { useContext } from "react";
+import { useRef } from "react";
 
-const TaskForm = ({ onAddTask }) => {
-	const [inputText, setInputText] = useState();
-	const addTaskHandler = (event) => {
-		event.preventDefault();
+import TaskContext from "../store/task-context";
 
-		if (inputText.trim() === "") return;
+const TaskForm = () => {
+	const inputRef = useRef();
+	const { onAddTask } = useContext(TaskContext);
 
-		onAddTask(inputText);
-		setInputText("");
+	const formSubmitHandler = (e) => {
+		const task = inputRef.current.value;
+		e.preventDefault();
+		if (task === "") return;
+		// add new task
+		onAddTask(task);
+		inputRef.current.value = "";
 	};
 
-	const inputChangeHandler = (e) => {
-		setInputText(e.target.value);
-	};
 	return (
-		<form>
-			<TaskInput onInputChange={inputChangeHandler} value={inputText} />
-			<button onClick={addTaskHandler}>+</button>
+		<form onSubmit={formSubmitHandler}>
+			<input ref={inputRef} placeholder="Enter task name" />
+			<button>+</button>
 		</form>
 	);
 };
