@@ -1,6 +1,5 @@
 import React from "react";
 const TaskItem = ({ task, onDelete }) => {
-	console.log("item");
 	const deleteHandler = () => {
 		onDelete(task.id);
 	};
