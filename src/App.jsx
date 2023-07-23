@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useState } from "react";
 import "./App.css";
 import Card from "./components/Card";
@@ -17,12 +18,16 @@ function App() {
 	const clearAllTasksHandler = () => {
 		setTasks([]);
 	};
-	const deleteTaskHandler = (id) => {
-		setTasks((tasksPrev) => {
-			const tasks = tasksPrev.filter((tsk) => tsk.id !== id);
-			return tasks;
-		});
-	};
+	//  memoizing this to prevent all list items re-render on one element change
+	const deleteTaskHandler = useCallback(
+		(id) => {
+			setTasks((tasksPrev) => {
+				const tasks = tasksPrev.filter((tsk) => tsk.id !== id);
+				return tasks;
+			});
+		},
+		[setTasks]
+	);
 
 	return (
 		<>

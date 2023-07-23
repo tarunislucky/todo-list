@@ -1,4 +1,6 @@
+import React from "react";
 const TaskItem = ({ task, onDelete }) => {
+	console.log("item");
 	const deleteHandler = () => {
 		onDelete(task.id);
 	};
@@ -20,5 +22,5 @@ const TaskItem = ({ task, onDelete }) => {
 		</li>
 	);
 };
-
-export default TaskItem;
+//  memoizing this to prevent all list items re-render on one element change
+export default React.memo(TaskItem);
