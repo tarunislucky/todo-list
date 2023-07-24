@@ -1,9 +1,38 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TaskItem from "./TaskItem";
+
+let isInitial = true;
 const TaskList = () => {
-	const tasks = useSelector((state) => {
-		return state.tasks;
+	const dispatch = useDispatch();
+	const { tasks, taskCount } = useSelector((state) => {
+		return state;
 	});
+
+	useEffect(() => {
+		if (isInitial) {
+			//on page reload
+			//get tasks from local storage and set the state
+			const localData = JSON.parse(localStorage.getItem("taskState"));
+			if (!localData) return;
+			// setState
+			dispatch({ type: "setTaskState", payload: localData });
+			isInitial = false;
+			return;
+		}
+
+		if (!isInitial) {
+			// set local storage on update to tasks
+			localStorage.setItem(
+				"taskState",
+				JSON.stringify({
+					tasks: tasks,
+					taskCount: taskCount,
+				})
+			);
+		}
+	}, [dispatch, tasks, taskCount]);
 
 	return (
 		<ul>

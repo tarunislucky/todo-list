@@ -20,6 +20,12 @@ const counterReducer = (state = initialState, action) => {
 			taskCount: 0
 		}
 	}
+	if (action.type === "setTaskState") {
+		return {
+			tasks: action.payload.tasks,
+			taskCount: action.payload.taskCount
+		}
+	}
 	return state;
 }
 // when store is created, reducer will be initialized without an action
