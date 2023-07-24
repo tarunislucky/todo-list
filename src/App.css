@@ -6,6 +6,7 @@
 
 body {
 	background-color: #323232;
+	font-family: "Open Sans", sans-serif;
 }
 li {
 	display: flex;

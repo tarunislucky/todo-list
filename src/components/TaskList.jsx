@@ -12,13 +12,13 @@ const TaskList = () => {
 
 	useEffect(() => {
 		if (isInitial) {
+			isInitial = false;
 			//on page reload
 			//get tasks from local storage and set the state
 			const localData = JSON.parse(localStorage.getItem("taskState"));
-			if (!localData) return;
+			if (!localData || localData.taskCount === 0) return;
 			// setState
 			dispatch({ type: "setTaskState", payload: localData });
-			isInitial = false;
 			return;
 		}
 
